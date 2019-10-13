@@ -40,20 +40,23 @@ public class client {
 		list.addLast(30);
 		list.addLast(40);
 		list.addLast(50);
+//		list.addLast(60);
+//		list.addLast(70);
+//		list.addLast(80);
 
 		list.display();
-//		list.reversePR();
-//		list.display();
+		list.reverseDR();
+		list.display();
 //		
 //		System.out.println(list.mid());
 //		System.out.println(list.KthNodeFromEnd(3));
 //		
-//		System.out.println(list.detectCycle());
-		
-		list.kReverse(2);
-		list.display();
-        
-		
+		// list.createCycle();
+		// System.out.println(list.detectCycle());
+//
+//		list.kReverse(3);
+//		list.display();
+
 	}
 
 }

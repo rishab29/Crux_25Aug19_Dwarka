@@ -229,15 +229,65 @@ public class LinkedList {
 	}
 
 	public void reverseDR() {
+		HeapMover hm = new HeapMover(this.head);
+		this.reverseDR(hm, this.head, 0);
 
 	}
 
+	private void reverseDR(HeapMover hm, Node right, int level) {
+
+		if (right == null) {
+			return;
+		}
+		reverseDR(hm, right.next, level + 1);
+		if (level >= this.size() / 2) {
+			int temp = hm.node.data;
+			hm.node.data = right.data;
+			right.data = temp;
+			hm.node = hm.node.next;
+		}
+	}
+
+	public class HeapMover {
+		Node node;
+
+		public HeapMover(Node node) {
+			// TODO Auto-generated constructor stub
+			this.node = node;
+		}
+	}
+
 	public int mid() {
+		return this.getmidNode().data;
+	}
+
+	private Node getmidNode() {
+		Node slow = this.head;
+		Node fast = this.head;
+
+		while (fast.next != null && fast.next.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+
+		return slow;
 
 	}
 
 	public int KthNodeFromEnd(int k) {
 
+		Node slow = this.head;
+		Node fast = this.head;
+		for (int i = 0; i < k; i++) {
+			fast = fast.next;
+		}
+
+		while (fast != null) {
+			slow = slow.next;
+			fast = fast.next;
+		}
+
+		return slow.data;
 	}
 
 	public void createCycle() throws Exception {
@@ -246,11 +296,46 @@ public class LinkedList {
 	}
 
 	public boolean detectCycle() {
+		Node slow = this.head;
+		Node fast = this.head;
 
+		while (slow != null && fast.next != null && fast.next.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if (slow == fast) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void kReverse(int k) throws Exception {
-		
+		LinkedList curr = new LinkedList(), prev = null;
+		while (!this.isEmpty()) {
+			if (this.size < k) {
+				for (int i = 0; i < k && !this.isEmpty(); i++) {
+					curr.addLast(this.removeFirst());
+				}
+			} else {
+				for (int i = 0; i < k && !this.isEmpty(); i++) {
+					curr.addFirst(this.removeFirst());
+				}
+			}
+
+			if (prev == null) {
+				prev = curr;
+			} else {
+				prev.tail.next = curr.head;
+				prev.tail = curr.tail;
+				prev.size = prev.size + curr.size;
+			}
+
+			curr = new LinkedList();
+		}
+
+		this.head = prev.head;
+		this.tail = prev.tail;
+		this.size = prev.size;
 	}
 
 }

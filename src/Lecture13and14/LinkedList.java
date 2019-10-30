@@ -1,4 +1,4 @@
-package Lecture13;
+package Lecture13and14;
 
 public class LinkedList {
 	private class Node {

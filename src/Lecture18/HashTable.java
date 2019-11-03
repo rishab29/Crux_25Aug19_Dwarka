@@ -11,12 +11,12 @@ public class HashTable<K, V> {
 			this.key = key;
 			this.value = value;
 		}
-		
+
 		public boolean equals(Object other) {
 			HTPair op = (HTPair) other;
 			return this.key.equals(op.key);
 		}
-		
+
 		public String toString() {
 			return "{" + this.key + "-" + this.value + "}";
 		}
@@ -37,23 +37,65 @@ public class HashTable<K, V> {
 
 	public void put(K key, V value) throws Exception {
 		int bi = this.hashFunction(key);
-		HTPair pta=new HTPair(key, value);
-		LinkedList<HTPair> bucket=this.bucketArray[bi];
-		if(bucket==null) {
-			bucket=new LinkedList<>();
+		HTPair pta = new HTPair(key, value);
+		LinkedList<HTPair> bucket = this.bucketArray[bi];
+		if (bucket == null) {
+			bucket = new LinkedList<>();
 			bucket.addLast(pta);
 			this.size++;
-			this.bucketArray[bi]=bucket;
-		}else {
-			int findAt=bucket.find(pta);
-			if(findAt==-1) {
+			this.bucketArray[bi] = bucket;
+		} else {
+			int findAt = bucket.find(pta);
+			if (findAt == -1) {
 				bucket.addLast(pta);
 				this.size++;
-			}else {
-				HTPair pair=bucket.getAt(findAt);
-				pair.value=value;
+			} else {
+				HTPair pair = bucket.getAt(findAt);
+				pair.value = value;
 			}
-			
+
+		}
+
+		double lf = (this.size * 1.0) / this.bucketArray.length;
+		if (lf >= 0.75) {
+			this.rehash();
+		}
+	}
+
+	public V get(K key) throws Exception {
+		int bi = this.hashFunction(key);
+		HTPair ptf = new HTPair(key, null);
+		LinkedList<HTPair> bucket = this.bucketArray[bi];
+		if (bucket == null) {
+			return null;
+		} else {
+			int findAt = bucket.find(ptf);
+			if (findAt == -1) {
+				return null;
+			} else {
+				HTPair pair = bucket.getAt(findAt);
+				return pair.value;
+			}
+
+		}
+	}
+
+	public V remove(K key) throws Exception {
+		int bi = this.hashFunction(key);
+		HTPair ptf = new HTPair(key, null);
+		LinkedList<HTPair> bucket = this.bucketArray[bi];
+		if (bucket == null) {
+			return null;
+		} else {
+			int findAt = bucket.find(ptf);
+			if (findAt == -1) {
+				return null;
+			} else {
+				HTPair pair = bucket.removeAt(findAt);
+				this.size--;
+				return pair.value;
+			}
+
 		}
 	}
 
@@ -63,18 +105,30 @@ public class HashTable<K, V> {
 		int bi = hc % this.bucketArray.length;
 		return bi;
 	}
-	
+
 	public void display() {
-		for(LinkedList<HTPair> bucket:this.bucketArray) {
-			if(bucket!=null&&!bucket.isEmpty()) {
+		for (LinkedList<HTPair> bucket : this.bucketArray) {
+			if (bucket != null && !bucket.isEmpty()) {
 				bucket.display();
-			}else {
+			} else {
 				System.out.println("NULL");
 			}
 			System.out.println("*******************************");
 		}
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
-	
-	
+
+	private void rehash() throws Exception {
+		LinkedList<HTPair>[] oba = this.bucketArray;
+		this.bucketArray = (LinkedList<HTPair>[]) new LinkedList[2 * oba.length];
+		this.size = 0;
+
+		for (LinkedList<HTPair> ob : oba) {
+			while (ob != null && !ob.isEmpty()) {
+				HTPair op = ob.removeFirst();
+				this.put(op.key, op.value);
+			}
+		}
+	}
+
 }

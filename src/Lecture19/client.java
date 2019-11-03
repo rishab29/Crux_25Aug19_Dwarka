@@ -23,46 +23,48 @@ public class client {
 //      
 //      System.out.println(heap.remove());
 //      heap.display();
-		
-		Heap<Student> heap=new Heap<>();
-		heap.add(new Student("A", 300, 7));
-		heap.add(new Student("B", 500, 5));
-		heap.add(new Student("C", 800, 2));
-		heap.add(new Student("D", 600, 4));
-		heap.add(new Student("E", 900, 1));
-		heap.add(new Student("F", 200, 8));
-		heap.add(new Student("G", 700, 3));
-		heap.add(new Student("H", 400, 6));
-		heap.add(new Student("I", 100, 9));
-		
+
+//		Heap<Student> heap=new Heap<>();
+//		heap.add(new Student("A", 300, 7));
+//		heap.add(new Student("B", 500, 5));
+//		heap.add(new Student("C", 800, 2));
+//		heap.add(new Student("D", 600, 4));
+//		heap.add(new Student("E", 900, 1));
+//		heap.add(new Student("F", 200, 8));
+//		heap.add(new Student("G", 700, 3));
+//		heap.add(new Student("H", 400, 6));
+//		heap.add(new Student("I", 100, 9));
+//		
+//		heap.display();
+
+		Integer[] arr = { 3, 2, 11, 43, 12, 5, 13, 50 };
+		Heap<Integer> heap = new Heap<>(false, arr);
 		heap.display();
-         
+
 	}
-	
-	
+
 	public static class Student implements Comparable<Student> {
 		int rank;
 		String name;
 		int marks;
 
-		public Student(String name, int marks,int rank) {
+		public Student(String name, int marks, int rank) {
 			// TODO Auto-generated constructor stub
 			this.rank = rank;
 			this.name = name;
-			this.marks=marks;
+			this.marks = marks;
 		}
 
 		public String toString() {
-			return "{name=" + this.name + ",Marks=" + this.marks + ", rank="+this.rank+"}";
+			return "{name=" + this.name + ",Marks=" + this.marks + ", rank=" + this.rank + "}";
 		}
 
 		@Override
 		public int compareTo(Student o) {
 			// TODO Auto-generated method stub
-			return this.rank-o.rank;
+			return this.rank - o.rank;
 		}
 
-		
 	}
 
 }

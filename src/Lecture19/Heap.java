@@ -15,6 +15,16 @@ public class Heap<T extends Comparable<T>> {
 		this.isMin = isMin;
 	}
 	
+	public Heap(boolean isMin,T[] arr) {
+		this(isMin);
+		for(T value:arr) {
+			this.data.add(value);
+		}
+		
+		for(int i=(this.data.size()/2)-1;i>=0;i--) {
+			this.downheapify(i);
+		}
+	}
 	public int size() {
 		return this.data.size();
 	}

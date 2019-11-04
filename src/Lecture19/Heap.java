@@ -3,8 +3,8 @@ package Lecture19;
 import java.util.ArrayList;
 
 public class Heap<T extends Comparable<T>> {
-	private ArrayList<T> data;
-	private boolean isMin;
+	public ArrayList<T> data;
+	public boolean isMin;
 
 	public Heap() {
 		this(false);
@@ -42,7 +42,7 @@ public class Heap<T extends Comparable<T>> {
 		this.upheapify(this.data.size()-1);
 	}
 	
-	private void upheapify(int ci) {
+	public void upheapify(int ci) {
 		if(ci==0) {
 			return;
 		}
@@ -54,7 +54,7 @@ public class Heap<T extends Comparable<T>> {
 		}
 	}
 	
-	private boolean isLarger(int pi,int ci) {
+	public boolean isLarger(int pi,int ci) {
 		T parent=this.data.get(pi);
 		T child=this.data.get(ci);
 		
@@ -66,7 +66,7 @@ public class Heap<T extends Comparable<T>> {
 		}
 	}
 	
-	private void swap(int pi,int ci) {
+	public void swap(int pi,int ci) {
 		T parent=this.data.get(pi);
 		T child=this.data.get(ci);
 		
@@ -82,7 +82,7 @@ public class Heap<T extends Comparable<T>> {
 		return rv;
 	}
 	
-	private void downheapify(int pi) {
+	public void downheapify(int pi) {
 		
 		int lci=2*pi+1;
 		int rci=2*pi+2;
